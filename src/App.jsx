@@ -1,11 +1,49 @@
-import React from "react"
+const Header = ({ course }) => {
+  return <h1>{course}</h1>
+}
+
+const Content = ({
+  part1, exercises1,
+  part2, exercises2,
+  part3, exercises3
+}) => {
+  return (
+    <>
+      <p>
+        {part1} {exercises1}
+      </p>
+      <p>
+        {part2} {exercises2}
+      </p>
+      <p>
+        {part3} {exercises3}
+      </p>
+    </>
+  )
+}
+
+const Total = ({ total }) => {
+  return <p>Number of exercises {total}</p>
+}
 
 const App = () => {
-  const amigos = [ 'Peter', 'Maya']
+  const course = 'Desenvolvimento de aplicação Half Stack'
+  const part1 = 'Fundamentos da biblioteca React'
+  const exercises1 = 10
+  const part2 = 'Usando props para passar dados'
+  const exercises2 = 7
+  const part3 = 'Estado de um componente'
+  const exercises3 = 14
 
   return (
     <div>
-      <p>{amigos}</p>
+      <Header course={course} />
+      <Content
+        part1={part1} exercises1={exercises1}
+        part2={part2} exercises2={exercises2}
+        part3={part3} exercises3={exercises3}
+      />
+      <Total total={exercises1 + exercises2 + exercises3} />
     </div>
   )
 }
