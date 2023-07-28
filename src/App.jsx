@@ -1,7 +1,5 @@
 import { useState } from 'react'
 
-const pontos = new Uint8Array(8)
-
 const App = () => {
   const anecdotes = [
     'If it hurts, do it more often.',
@@ -13,9 +11,10 @@ const App = () => {
     'Programming without an extremely heavy use of console.log is same as if a doctor would refuse to use x-rays or blood tests when diagnosing patients.',
     'The only way to go fast, is to go well.'
   ]
-   
+
   const [selected, setSelected] = useState(0)
-  const [points, setPoints] = useState(new Uint8Array(8))
+  const [indexMax, setIndexMax] = useState(0)
+  const [points, setPoints] = useState(new Array(8).fill(0))
 
   const randomSelected = (min, max) => {
     min = Math.ceil(min)
@@ -24,17 +23,21 @@ const App = () => {
   }
 
   const handleVote = () => {
-    const copy = {...points}
+    const copy = { ...points }
     copy[selected] += 1
     setPoints(copy)
+    setIndexMax(Number(Object.keys(copy).reduce((a, b) => copy[a] > copy[b] ? a : b)))
   }
 
   return (
     <div>
+      <h1>Anecdote of the day</h1>
       <p>{anecdotes[selected]}</p>
       <p>has {points[selected]} votes</p>
-      <button onClick={handleVote}>Vote</button>
+      <button onClick={() => handleVote()}>Vote</button>
       <button onClick={() => randomSelected(0, anecdotes.length - 1)}>Next anecdote</button>
+      <h1>Anecdote with most votes</h1>
+      {anecdotes[indexMax]}
     </div>
   )
 }
